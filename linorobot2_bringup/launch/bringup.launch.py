@@ -43,21 +43,21 @@ def generate_launch_description():
     )
 
     custom_robot_launch_path = PathJoinSubstitution(
-        [FindPackageShare('linorobot2_bringup'), 'launch', 'custom_robot.launch.py']
+        [FindPackageShare('linorobot2_bringup'), 'launch', 'esp32_robot.launch.py']
     )
 
     return LaunchDescription([
         DeclareLaunchArgument(
             name='custom_robot', 
-            default_value='false',
+            default_value='true',
             description='Use custom robot'
         ),
 
-        DeclareLaunchArgument(
-            name='base_serial_port', 
-            default_value='/dev/ttyACM0',
-            description='Linorobot Base Serial Port'
-        ),
+        # DeclareLaunchArgument(
+        #     name='base_serial_port', 
+        #     default_value='/dev/ttyACM0',
+        #     description='Linorobot Base Serial Port'
+        # ),
 
         DeclareLaunchArgument(
             name='joy', 
@@ -76,13 +76,13 @@ def generate_launch_description():
             remappings=[("odometry/filtered", "odom")]
         ),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(default_robot_launch_path),
-            condition=UnlessCondition(LaunchConfiguration("custom_robot")),
-            launch_arguments={
-                'base_serial_port': LaunchConfiguration("base_serial_port")
-            }.items()
-        ),
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(default_robot_launch_path),
+        #     condition=UnlessCondition(LaunchConfiguration("custom_robot")),
+        #     launch_arguments={
+        #         'base_serial_port': LaunchConfiguration("base_serial_port")
+        #     }.items()
+        # ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(custom_robot_launch_path),

@@ -25,20 +25,27 @@ def generate_launch_description():
     joy_config_path = PathJoinSubstitution(
         [FindPackageShare("linorobot2_bringup"), "config", "joy.yaml"]
     )
+    teleop_launch_path = PathJoinSubstitution(
+        [FindPackageShare('teleop_twist_joy'), 'launch', 'teleop-launch.py']
+    )
 
     return LaunchDescription([
-        Node(
-            package='joy_linux',
-            executable='joy_linux_node',
-            name='joy_linux_node',
-            output='screen',
+        DeclareLaunchArgument(
+            name='joy_config', 
+            default_value='xbox',
+            description='Linorobot Base Serial Port'
         ),
-
         Node(
             package='teleop_twist_joy',
             executable='teleop_node',
             name='teleop_twist_joy_node',
             output='screen',
             parameters=[joy_config_path]
-        )
+        ),
+         IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(teleop_launch_path),
+            launch_arguments={
+                'joy_config:=': LaunchConfiguration("joy_config")
+            }.items()
+        ),
     ])
