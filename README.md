@@ -51,6 +51,9 @@ depth_sensor:
 - `zed2` - [Zed 2](https://www.stereolabs.com/zed-2)
 - `zed2i` - [Zed 2i](https://www.stereolabs.com/zed-2i)
 - `zedm` - [Zed Mini](https://www.stereolabs.com/zed-mini)
+- `oakd` - [OAK D](https://shop.luxonis.com/collections/oak-cameras-1/products/oak-d)
+- `oakdlite` - [OAK D Lite](https://shop.luxonis.com/collections/oak-cameras-1/products/oak-d-lite-1)
+- `oakdpro` - [OAK-D Pro](https://shop.luxonis.com/collections/oak-cameras-1/products/oak-d-pro)
 
 
 Alternatively, follow this [guide](./ROBOT_INSTALLATION.md) to do the installation manually.
@@ -212,18 +215,12 @@ The `rviz` argument on slam.launch.py won't work on headless setup but you can v
 
 #### 3.2 Move the robot to start mapping
 
-Drive the robot manually until the robot has fully covered its area of operation. Alternatively, the robot can also receive goal poses to navigate autonomously while mapping:
-
-    ros2 launch nav2_bringup navigation_launch.py
-
-- Pass `use_sim_time:=true` to the launch file when running in simulation.
-
-More info [here](https://navigation.ros.org/tutorials/docs/navigation2_with_slam.html).
+Drive the robot manually until the robot has fully covered its area of operation. Alternatively, you can use the `2D Goal Pose` tool in RVIZ to set an autonomous goal while mapping. More info [here](https://navigation.ros.org/tutorials/docs/navigation2_with_slam.html).
 
 #### 3.3 Save the map
 
     cd linorobot2/linorobot2_navigation/maps
-    ros2 run nav2_map_server map_saver_cli -f <map_name> --ros-args -p save_map_timeout:=10000
+    ros2 run nav2_map_server map_saver_cli -f <map_name> --ros-args -p save_map_timeout:=10000.
 
 ### 4. Autonomous Navigation
 
